@@ -1,36 +1,112 @@
 [English version of this readme is available in the file readme.en.md](./readme.en.md)
 
-# Ensimmäiset Playwright-testit 🎭
+# Ensimmäiset Robot Framework -testit 🤖
 
-Tämän tehtävän tarkoituksena on kirjoittaa ensimmäiset testit Playwright-työkalulla. Tehtävässä testataan yksinkertaisen web-sivuston toiminnallisuuksia, eli kirjautumista ja rekisteröitymistä. Tavoitteina on oppia suorittamaan operaatioita (actions) kuten tekstin syöttämistä ja painikkeiden painamista, sekä tarkastamaan (assert) tuloksia, kuten virheilmoituksia ja onnistumisviestejä.
+Tämän tehtävän tarkoituksena on opetella suorittamaan ja kirjoittamaan testejä [Robot Framework -työkalulla](https://robotframework.org/). 
 
-Tässä tehtävässä käytettävä esimerkkisivusto on toteutettu testauksen harjoittelua varten, joten se ei noudata kaikkia tavanomaisia tuotantokäytössä olevien web-sivustojen oletuksia. Suurimpana eroavaisuutena sivuston kautta tehdyt rekisteröitymiset ja kirjautumiset **ovat voimassa vain saman selaimen sisällä**. Rekisteröitymiset ja kirjautumiset eivät siis vaikuta eri selainten tai testitapausten välillä.
+Tehtävä on jatkoa Playwright-tehtävälle, jossa harjoiteltiin kirjautumista ja rekisteröitymistä käyttäen samaa testattavaa sivustoa. Tässä Robot Framework -tehtävässä keskitytään samoihin toiminnallisuuksiin, mutta nyt tavoitteena on toteuttaa testit Robot Framework -työkalulla.
 
-Playwright suorittaa testejä rinnakkain ja suoritusten järjestys ei ole taattu, joten testiselain nollataan aina jokaisen testin alussa. Yhdessä testissä tekemäsi rekisteröityminen tai kirjautuminen ei siis ole voimassa enää seuraavissa testitapauksissa.
+Kuten aiemmin, tässä tehtävässä käytettävä sivusto on toteutettu testauksen harjoittelua varten, joten se ei noudata kaikkia tavanomaisia tuotantokäytössä olevien web-sivustojen oletuksia. Erityisesti sivuston kautta tehdyt rekisteröitymiset ja kirjautumiset **ovat voimassa vain saman selainistunnon sisällä**. Esimerkiksi rekisteröityminen ei siis säily eri testitapausten välillä, kun testiselain nollataan jokaisen testitapauksen alussa.
 
-> *"Playwright creates a browser context for each test. Browser context is equivalent to a brand new browser profile. This delivers full test isolation with zero overhead."*
->
-> https://playwright.dev/
-
-Tässä dokumentissa löytyy toteutettaviin testitapauksiin ja testattavaan sivustoon liittyvät tiedot, ja pääasiallinen materiaali testien kirjoittamiseksi löytyy [Playwrightin dokumentaatiosta](https://playwright.dev/docs/writing-tests). Tekstimuotoisen dokumentaation lisäksi voit hyödyntää lukuisia videoita ja tutoriaaleja, joita löytyy esimerkiksi Playwrightin [YouTube-kanavalta](https://www.youtube.com/@Playwrightdev/videos).
-
-Suosittelemme tässä tehtävässä katsomaan videon [Generating Playwright Tests in VS Code](https://www.youtube.com/watch?v=LM4yqrOzmFE), jossa näytetään sekä testien "nauhoittamista" että elementtien paikallistamista sivulta hyödyntäen VS Code:n "Pick locator" -toimintoa.
-
-Jos et katsonut vielä edellisessä tehtävässä videota [Introduction to Playwright for End-to-End Testing with Debbie O'Brien (JS Drops, youtube.com)](https://youtu.be/lCb9JoZFpHI), suosittelemme katsomaan sen, jotta saat yleiskuvan Playwrightin ja sen työkalujen käytöstä.
+Suosittelemme alkuun pääsemiseksi katsomaan [Robot Framework tutorial (youtube.com)](https://www.youtube.com/playlist?list=PLSK6YK5OGX1AuQy0tbvdKBV9mrKi46kKH) -soittolistan videot.
 
 
-## Tehtävän ja testauksen lähtökohdat
+## Asennukset
 
-Tässä tehtävässä oletetaan, että olet suorittanut aikaisemman tehtävän, jossa harjoiteltiin Playwright-projektin luontia ja asennusta sekä testien suorittamista. Jos et ole vielä tehnyt sitä, suosittelemme aloittamaan siitä. Testit voidaan suorittaa niin komentoriviltä, Visual Studio Code -editorista kuin Playwrightin UI-työkalusta, joten tiettyä tapaa ei ole erikseen määritelty.
+Robot Framework perustuu Pythoniin ja sen käyttäminen edellyttää [Pythonin sekä pip-paketinhallintajärjestelmän asennusta](https://www.python.org/downloads/).
 
-Tehtävärepositorio sisältää jo valmiiksi Playwright-projektin pohjan, jonka voit asentaa ja käynnistää seuraavasti:
+Pythonin ja Robot Frameworkin lisäksi tarvitset [**Browser**-kirjaston](https://robotframework-browser.org/), joka mahdollistaa web-selainten ohjaamisen testeissäsi. Browser-kirjasto käyttää taustalla [**Playwright**-testaustyökalua](https://playwright.dev), joka puolestaan on toteutettu Node.js:llä, joten [tarvitset myös Node.js:n asennettuna](https://nodejs.org/en/download).
 
-```bash
-npm install
-npx playwright test
+Voit tarkistaa, että sinulla on tarvittavat työkalut asennettuna, suorittamalla seuraavat komennot komentorivillä:
+
+```sh
+python3 --version  # tai `py --version` Windowsissa
+
+node --version
+pip --version
 ```
 
-Testien suorittaminen edellyttää myös selainten asentamista, minkä olet toivottavasti tehnyt jo aikaisemmassa tehtävässä. Tarvittaessa [asenna testiselain Playwrightin ohjeita seuraten](https://playwright.dev/docs/browsers).
+Pythonin käynnistyskomento voi vaihdella käyttöjärjestelmästä ja Pythonin asennustavasta riippuen. Yleensä `python3` toimii useimmissa järjestelmissä, mutta Windowsissa saatat joutua käyttämään `py`-komentoa.
+
+
+### 1. Asenna Robot Framework
+
+Robot Frameworkin kotisivulta löytyy [pika-asennusohje](https://robotframework.org/?tab=1#getting-started), jonka avulla saat sen asennettua itsellesi. Laajempi, [erillinen asennusohje](https://github.com/robotframework/robotframework/blob/master/INSTALL.rst), esittelee tarkemmin eri vaihtoehtoja.
+
+Pikaohjeen mukaan voit asentaa Robot Frameworkin PIP-paketinhallintajärjestelmällä:
+
+```sh
+# Install Robot Framework with pip:
+pip install robotframework
+
+# Verify the installation (prints usage instructions):
+robot --help
+```
+
+👆 Komennossa käytetty pip-pakettienhallinta asentuu oletuksena Pythonin mukana. Asennettavan `robotframework`-paketin tarkemmat tiedot löytyvät pypi.org-sivustolta https://pypi.org/project/robotframework/.
+
+
+### 2. Asenna tarvittavat paketit
+
+Robot Framework sisältää perustoiminnot, joiden avulla voidaan suorittaa testejä, mutta se ei sisällä valmiita kirjastoja web-selainten ohjaamiseen. Tämän vuoksi tarvitset erillisen kirjaston, kuten [Browser-kirjaston](https://robotframework-browser.org/), joka mahdollistaa web-selainten käytön Robot Frameworkin kanssa. Browser-kirjasto käyttää taustalla [Playwright](https://playwright.dev)-työkalua, joka on Node.js:llä toteutettu työkalu web-selainten automatisointiin.
+
+Tutustu [Browser-kirjaston ohjeisiin](https://robotframework-browser.org/#installation) ja asenna se. Pika-asennusohjeen mukaan asennus onnistuu pip-työkalulla seuraavasti:
+
+```sh
+# Install Browser library from PyPi with pip:
+pip install robotframework-browser
+
+# Verify the installation (prints usage instructions):
+rfbrowser --help
+```
+
+`robotframework-browser`-paketin tarkemmat tiedot löytyvät osoitteesta https://pypi.org/project/robotframework-browser/.
+
+Seuraavaksi tarvitset Playwright-työkalun sekä siihen kuuluvat testiselaimet. Ne asennetaan Browser-kirjaston avulla käyttäen `rfbrowser init`-komentoa:
+
+```sh
+# initialize the Browser library (installs all browsers):
+rfbrowser init
+```
+
+Jos haluat käyttää vain tiettyä selainta, voit määrittää selaimen asennuskomentoon:
+
+```sh
+# alternatively, only install Chromium:
+rfbrowser init chromium
+```
+
+**Playwright**-työkalua ei tarvitse erikseen asentaa Browser-kirjastoa käytettäessä, vaan se asentuu edellä mainituilla komennoilla.
+
+Harjoituksen tai kurssin lopuksi, kun et enää tarvitse selaimia, voit vapauttaa tilaa ja poistaa testiselaimet komennolla:
+
+```sh
+# clean up browsers and node dependencies:
+rfbrowser clean-node
+
+# optionally, uninstall Robot Framework and Browser library:
+pip uninstall robotframework-browser
+pip uninstall robotframework
+```
+
+
+## Testien suorittaminen
+
+Kun olet saanut Robot Frameworkin ja Browser-kirjaston asennettua, voit kokeilla suorittaa ensimmäisiä testejä. Tässä repositoriossa on valmiiksi määritelty testitiedosto [`tests/example.robot`](./tests/example.robot), joka sisältää yksinkertaisen testin. Voit suorittaa kyseisen testitiedoston komennolla:
+
+```sh
+robot tests/example.robot
+```
+
+Testin pitäisi mennä läpi onnistuneesti ja tulostaa testitulokset konsoliin. Lisäksi Robot Framework luo HTML-raportin, jonka voit avata selaimella. 
+
+Raportin tarkasteleminen on erityisen hyödyllistä, mikäli testit epäonnistuvat, sillä raportti sisältää yksityiskohtaisia tietoja testitapauksista ja testien epäonnistuessä myös kuvankaappauksia.
+
+
+### 3. VS Code -laajennoksen asennus
+
+[Robot Frameworkin ohjeissa](https://docs.robotframework.org/docs/getting_started/ide) suositellaan VS Codea sekä [RobotCode](https://marketplace.visualstudio.com/items?itemName=d-biehl.robotcode)-laajennosta testien kirjoittamiseksi ja suorittamiseksi VS Codessa. Suosittelemme perehtymään laajennokseen ja oman harkinnan mukaan asentamaan myös sen. Laajennos tarjoaa mm. [syntaksikorostuksen, automaattisen täydennyksen ja testien suorittamisen suoraan editorista käsin](https://robotcode.io/) ([robotcode.io](https://robotcode.io/)).
+
 
 
 ## Testattava sivusto
@@ -141,6 +217,20 @@ npx playwright test --reporter="list,html" --project=chromium
 ```
 
 Palautettuasi tehtävän testisi pisteytetään sen mukaan, kuinka hyvin ne todentavat edellä listattuja vaatimuksia. On siis oleellista, että testeissäsi syötät sekä oikeita että virheellisiä tietoja ja tarkistat, että sivuston tila sekä siinä näkyvät viestit toimivat oikein. Tarvittaessa tutki actions-välilehden raporttia ja testituloksia, jotta voit täydentää testejäsi kattamaan lisää testitapauksia. Voit palauttaa tehtävän uudelleen useita kertoa tehtävän määräaikaan asti.
+
+
+## Riippuvuuksien ja selainten poistaminen
+
+Mikäli haluat tehtävän päätteeksi poistaa asentamasi selaimet, Robot Frameworkin ja Browser-kirjaston, voit tehdä sen [seuraavilla komennoilla](https://github.com/MarketSquare/robotframework-browser?tab=readme-ov-file#uninstall-instructions):
+
+```sh
+# Clean old node side dependencies and browser binaries: 
+rfbrowser clean-node
+
+# Uninstall with pip:
+pip uninstall robotframework-browser
+pip uninstall robotframework
+```
 
 
 ## Materiaalista
