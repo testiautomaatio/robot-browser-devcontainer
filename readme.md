@@ -58,6 +58,8 @@ Itse luotavien tunnusten lisäksi sivustolla on kaksi valmista tunnusta, jotka o
 
 Voit käyttää näitä tunnuksia niissä testitapauksissa, joissa tarvitset olemassa olevan käyttäjän kirjautumista tai rekisteröitymistä, tai haluat varmistaa, että samalla tunnuksella ei voi rekisteröityä uudelleen.
 
+Tunnukset löytyvät myös [`tests/users.resource`-tiedostosta](./tests/users.resource), joka on tarkoitettu käytettäväksi testitiedostoissa resurssina.
+
 \* *Lue lisää ympäristömuuttujien käytöstä tämän dokumentin loppuosasta.*
 
 

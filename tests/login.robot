@@ -5,6 +5,9 @@ Library             Browser
 Test Setup          New Context    tracing=True
 Test Teardown       Close Context
 
+# The users.resource file contains usernames and passwords that can be used:
+Resource            users.resource
+
 
 *** Variables ***
 
