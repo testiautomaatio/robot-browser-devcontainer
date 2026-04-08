@@ -19,13 +19,9 @@ jobs:
     - name: Disable man-db auto-update (prevents apt-get hangs)
       run: sudo rm -f /var/lib/man-db/auto-update
 
-    - name: Install Robot Framework
-      run: pip install robotframework
-      timeout-minutes: 2
-
-    - name: Install Browser library
-      run: pip install robotframework-browser
-      timeout-minutes: 2
+    - name: Install Robot Framework and Browser library
+      run: pip install -r requirements.txt
+      timeout-minutes: 4
 
     - name: Install Chromium browser
       run: rfbrowser init chromium
