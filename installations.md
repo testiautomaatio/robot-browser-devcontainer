@@ -9,7 +9,7 @@ We have also prepared a [development container](https://code.visualstudio.com/do
 
 ## Local installation
 
-You can verify that you have the required tools installed by running the following commands in your terminal:
+First verify that you have the required tools installed by running the following commands in your terminal:
 
 ```sh
 python3 --version  # or `py --version` on Windows
@@ -18,7 +18,10 @@ node --version
 pip --version
 ```
 
-The command used to start Python may vary depending on your operating system and how Python was installed. In most systems, `python3` works, but on Windows you may need to use the `py` command. If you do not have Python or Node.js installed, install the latest LTS (long-term support) versions from their respective websites or with your system's package manager.
+The command used to start Python may vary depending on your operating system and how Python was installed. In most systems, `python3` works, but on Windows you may need to use the `py` command.
+
+
+If any of the commands above fail, it means that the corresponding tool is either not installed or not added to your [system's PATH](https://en.wikipedia.org/wiki/PATH_(variable)). Either way, look for instructions specific to your operating system, your preferred installation method, and your setup to get the tools installed and working before proceeding.
 
 
 ### 1. Install Robot Framework
@@ -38,7 +41,7 @@ robot --help
 The `pip` package manager used in the command above is installed with Python by default. More detailed information about the `robotframework` package is available on PyPI: https://pypi.org/project/robotframework/.
 
 
-### 2. Install the required packages
+### 2. Install the Browser library and test browsers
 
 Robot Framework includes the core functionality needed to run tests, but it does not include built-in libraries for browser automation. For that reason, you need a separate library such as the [Browser library](https://robotframework-browser.org/), which enables browser automation with Robot Framework. The Browser library uses [Playwright](https://playwright.dev) in the background, which is a Node.js-based tool for browser automation.
 
@@ -52,7 +55,7 @@ pip install robotframework-browser
 rfbrowser --help
 ```
 
-More detailed information about the `robotframework-browser` package is available at https://pypi.org/project/robotframework-browser/.
+More detailed information about the `robotframework-browser` package is available at https://pypi.org/project/robotframework-browser/. You can also read the usage instructions that were printed to the console with the `--help` command.
 
 Next, you need the Playwright tool and its browser binaries. These can be installed through the Browser library using the `rfbrowser init` command:
 
@@ -64,7 +67,7 @@ rfbrowser init
 rfbrowser init chromium
 ```
 
-You do not need to install **Playwright** separately when using the Browser library, because it is installed by the commands above.
+You do not need to install Playwright separately when using the Browser library, because it is installed by the commands above.
 
 At the end of the exercise or course, when you no longer need the browsers, you can free up space and remove the tools and browser binaries with the following command:
 
@@ -78,7 +81,7 @@ pip uninstall robotframework
 ```
 
 
-### 3. Install the VS Code extension (optional)
+### 3. Install the VS Code extension (optional but recommended)
 
 The [Robot Framework documentation](https://docs.robotframework.org/docs/getting_started/ide) recommends VS Code together with the [RobotCode](https://marketplace.visualstudio.com/items?itemName=d-biehl.robotcode) extension for writing and running tests in VS Code. It is worth reviewing the extension and installing it if it fits your workflow. The extension provides [syntax highlighting, autocompletion, and the ability to run tests directly from the editor](https://robotcode.io/) ([robotcode.io](https://robotcode.io/)).
 
@@ -95,3 +98,5 @@ To use the development container locally, you need to have [Docker](https://www.
 If installing Docker locally is not your preferred option, you can also use the same development container in a cloud-based environment such as [GitHub Codespaces](https://github.com/features/codespaces). GitHub Codespaces allows you to create a development environment in the cloud that is accessible through your browser or remotely from VS Code. The developer experience in Codespaces is very similar to using a local development container or a local installation.
 
 You can open the project in GitHub Codespaces by following [this guide](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository#creating-a-codespace). After opening the repository in GitHub, you can create a new codespace by clicking on the "Code" button on the repository's front page and selecting "Open with Codespaces". This will create a new codespace that uses the same development container configuration, so you will have the same tools and dependencies available as if you were running it locally. This can be a convenient option if you want to avoid installing Docker or if you want to work from different machines without having to set up the environment each time.
+
+Cloud based development environments are commercial services and may require a paid subscription. Be sure to check the pricing details of the service you choose to use. At the time of writing, GitHub Codespaces offers a free tier with limited hours of usage per month, and additional hours can be purchased if needed (see [docs.github.com](https://docs.github.com/en/billing/concepts/product-billing/github-codespaces)).
