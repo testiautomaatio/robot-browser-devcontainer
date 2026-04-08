@@ -1,7 +1,11 @@
 #!/bin/bash
 
-echo "Extracting .trace files from ZIP archives..."
 mkdir __traces__
 
-# Extract .trace files from all ZIP archives in the test-results directory to the __traces__ directory
-find test-results -type f -name "*.zip" -exec unzip -o {} "*.trace" -d __traces__ \;
+echo "Extracting .trace files from ZIP archives..."
+find . -type f -name "*.zip" | while read -r zip_file; do
+    zip_name="$(basename "$zip_file" .zip)"
+    folder_name="__traces__/${zip_name}"
+    mkdir -p "$folder_name"
+    unzip -o "$zip_file" -d "$folder_name" "*.trace"
+done
