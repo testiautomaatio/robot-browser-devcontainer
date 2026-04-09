@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
+      PLAYWRIGHT_BROWSERS_PATH: /home/vscode/pw-browsers
 
     steps:
     - name: Checkout code
