@@ -1,5 +1,5 @@
 {
-    "name": "authentication-tests-robot",
+    "name": "robot-browser-devcontainer",
     "image": "mcr.microsoft.com/devcontainers/python:3",
     "features": {
         "ghcr.io/devcontainers/features/node:1": {}

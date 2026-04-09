@@ -6,10 +6,6 @@ The Browser library is licensed under the Apache-2.0 license.
 *** Settings ***
 Library             Browser
 
-# The following lines are required for automatic assessment of the exercise:
-Test Setup          New Context    tracing=True
-Test Teardown       Close Context
-
 
 *** Test Cases ***
 Example Test
