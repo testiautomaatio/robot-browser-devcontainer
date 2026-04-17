@@ -15,6 +15,7 @@ To use the development container locally, you need to have [Docker](https://www.
 * [Robot Framework Browser library](https://robotframework-browser.org/)
 * [Playwright browsers (Chromium)](https://playwright.dev/docs/browsers/)
 * [RobotCode extension for VS Code](https://marketplace.visualstudio.com/items?itemName=d-biehl.robotcode)
+* [Robocop static code analysis and formatting tool](https://github.com/MarketSquare/robotframework-robocop)
 
 Python, Node.js and Robocode are installed with the [devcontainer.json](./.devcontainer/devcontainer.json) configuration, and the rest of the tools are installed with the [`postCreate.sh` script](./.devcontainer/postCreate.sh) that runs after the container is created.
 
