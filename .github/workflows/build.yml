@@ -21,9 +21,42 @@ jobs:
     - name: Disable man-db auto-update (prevents apt-get hangs)
       run: sudo rm -f /var/lib/man-db/auto-update
 
-    - name: Run post create script for devcontainer setup
-      run: ./.devcontainer/postCreate.sh
-      timeout-minutes: 5
+    # Cache pip download wheels keyed by requirements.txt so packages are not
+    # re-downloaded on every run. The built-in pip cache in setup-python stores
+    # wheels in ~/.cache/pip and is restored before pip install runs.
+    - name: Set up Python with pip cache
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+        cache: 'pip'
+        cache-dependency-path: requirements.txt
+
+    # Cache Playwright/rfbrowser browser binaries to avoid large downloads on
+    # every run. The cache key is based on requirements.txt so it is invalidated
+    # whenever library versions change. The workflow still works if the paths do
+    # not exist on a cold cache – actions/cache tolerates missing directories.
+    - name: Cache Playwright browser binaries
+      uses: actions/cache@v4
+      id: playwright-cache
+      with:
+        path: |
+          ~/.cache/ms-playwright
+          ~/.cache/playwright
+          ~/.cache/robotframework-browser
+        key: ${{ runner.os }}-playwright-${{ hashFiles('requirements.txt') }}
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Only initialize the Browser library (downloads Chromium + OS deps) when
+    # the Playwright cache is cold. On a cache hit the binaries are already in
+    # place and this step can be skipped entirely.
+    - name: Initialize Robot Framework Browser (installs Chromium + system deps)
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
+      run: rfbrowser init chromium --with-deps
+      timeout-minutes: 10
 
     - name: Run tests
       run: robot --outputdir=test-results/ tests/
