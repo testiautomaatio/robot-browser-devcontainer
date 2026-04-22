@@ -39,6 +39,8 @@ The Browser library is licensed under the [Apache 2.0 license](https://github.co
 
 The RobotCode extension is licensed under the [Apache 2.0 license](https://marketplace.visualstudio.com/items?itemName=d-biehl.robotcode#license).
 
+The Robocop tool is licensed under the [Apache 2.0 license](https://github.com/MarketSquare/robotframework-robocop/blob/main/LICENSE).
+
 
 ## About the material
 
