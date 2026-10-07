@@ -16,6 +16,7 @@ To use the development container locally, you need to have [Docker](https://www.
 * [Playwright browsers (Chromium)](https://playwright.dev/docs/browsers/)
 * [RobotCode extension for VS Code](https://marketplace.visualstudio.com/items?itemName=d-biehl.robotcode)
 * [Robocop static code analysis and formatting tool](https://github.com/MarketSquare/robotframework-robocop)
+* [Desktop lite](https://github.com/devcontainers/features/tree/main/src/desktop-lite)
 
 Python, Node.js and Robocode are installed with the [devcontainer.json](./.devcontainer/devcontainer.json) configuration, and the rest of the tools are installed with the [`postCreate.sh` script](./.devcontainer/postCreate.sh) that runs after the container is created.
 
@@ -29,6 +30,17 @@ robot --outputdir=test-results/ tests/example.robot
 ```
 
 The test should pass successfully and print the results to the console. Robot Framework also generates an HTML report that you can open in a browser.
+
+You can also verify that the robocop tool is working by running the following command:
+
+```sh
+robocop check tests/example.robot
+```
+
+
+## Using the graphical user interface (GUI)
+
+The devcontainer includes a [lightweight desktop environment](https://github.com/devcontainers/features/tree/main/src/desktop-lite) that allows you to run GUI applications. You can use your web browser to open a VNC session to the container, which allows you to see the tests running and use the browser library's GUI features. To access the GUI, open http://localhost:6080 in your browser after starting the container.
 
 
 ## Licenses
