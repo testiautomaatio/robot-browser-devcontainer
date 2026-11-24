@@ -1,6 +1,6 @@
 # Development container for Robot Framework and Browser library
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/testiautomaatio/robot-browser-devcontainer)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/testiautomaatio/robot-browser-devcontainer?quickstart=1)
 
 Robot Framework is a Python-based test automation framework, so using it requires Python and pip to be installed. The Browser library, commonly used for web testing with Robot Framework, utilizes the Node.js based Playwright library, so Node.js must also be installed to use the Browser library. Playwright also uses browser engines that need installation. Although the setup process is often straightforward, it can be time-consuming and may involve troubleshooting, especially for those new to test automation or web testing.
 
